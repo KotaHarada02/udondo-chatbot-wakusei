@@ -21,3 +21,10 @@ limits:
 links:
   line_help: https://line.me/R/ti/p/@771ypyse
 usd_jpy: 158.73
+# 店のリンクを知識として足す。URL は LLM に見せず、参照されたときに画面のボタンとして出す
+link_knowledge:
+  - id: link-line
+    category: link
+    question: 公式LINEのURLは？友だち追加の方法は？
+    answer: 公式LINEは、この答えの下のボタンから開ける。LINEで「ウドンド」と検索して友だち追加することもできる。
+    link_url: https://line.me/R/ti/p/@771ypyse

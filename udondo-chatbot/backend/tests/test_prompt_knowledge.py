@@ -49,3 +49,22 @@ def test_answer_language():
     assert answer_language("面要煮几分钟", "zh-Hans") == "zh-Hans"
     assert answer_language("麵要煮幾分鐘", "zh-Hant") == "zh-Hant"
     assert answer_language("123", "ko") == "ko"
+
+
+def test_link_labels_follow_destination():
+    from src.bot.knowledge import link_label
+
+    assert link_label("https://line.me/R/ti/p/@x") == "line"
+    assert link_label("https://maps.app.goo.gl/abc") == "map"
+    assert link_label("https://youtu.be/x") == "video"
+    assert link_label("https://www.udondo.com/マンガnew") == "manga"
+    assert link_label("https://example.com") == "link"
+
+
+def test_tenant_link_knowledge_is_added():
+    from src.bot.api import _knowledge_loader
+
+    kb = _knowledge_loader("udondo")()
+    item = next(k for k in kb.items if k.id == "link-line")
+    assert item.attachments() == [{"kind": "link", "url": "https://line.me/R/ti/p/@771ypyse", "label": "line"}]
+    assert "https://line.me" not in kb.prompt_block()

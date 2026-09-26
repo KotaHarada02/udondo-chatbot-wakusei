@@ -205,7 +205,6 @@ export function MangaApp() {
             </select>
           </label>
         </header>
-        <div className="mg-demo" role="note">{s.demo}</div>
 
         {fallback ? (
           <Fallback config={config} lang={lang} lineUrl={lineUrl} onRetry={() => void connect(lang)} />
@@ -301,7 +300,7 @@ function BotRow({ m, lang, variant, lineUrl, onFeedback, onOpen }: {
               <button key={a.url} type="button" className="mg-link-card" onClick={() => onOpen(a)}>{a.label ?? "画像を見る"}</button>
             ) : (
               <a key={a.url} className="mg-link-card" href={a.url} target="_blank" rel="noopener noreferrer">
-                {a.kind === "video" ? "動画を見る" : "リンクを開く"}<ExternalIcon />
+                {s.links[a.label ?? (a.kind === "video" ? "video" : "link")] ?? s.links.link}<ExternalIcon />
               </a>
             ),
           )}

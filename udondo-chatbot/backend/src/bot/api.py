@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from .config import Tenant, get_settings, get_tenant
-from .knowledge import KnowledgeBase, KnowledgeCache, from_supabase_row, load_sample
+from .knowledge import KnowledgeBase, KnowledgeCache, KnowledgeItem, from_supabase_row, load_sample
 from .llm import FakeLLM, GeminiDeveloperLLM
 from .service import DialogueService, GuardError
 from .store import MemoryStore, SupabaseStore
@@ -43,8 +43,13 @@ _services: dict[str, DialogueService] = {}
 
 def _knowledge_loader(tenant_id: str):
     s = get_settings()
+    links = [KnowledgeItem(**r) for r in get_tenant(tenant_id).config.get("link_knowledge", [])]
 
     def load() -> KnowledgeBase:
+        kb = _load_base()
+        return KnowledgeBase(kb.items + links, version=kb.version)
+
+    def _load_base() -> KnowledgeBase:
         if s.use_supabase:
             from supabase import create_client
 

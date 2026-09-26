@@ -26,10 +26,22 @@ class KnowledgeItem:
     def attachments(self) -> list[dict[str, str]]:
         out = []
         if self.video_url:
-            out.append({"kind": "video", "url": self.video_url, "label": self.question})
+            out.append({"kind": "video", "url": self.video_url, "label": link_label(self.video_url)})
         if self.link_url:
-            out.append({"kind": "link", "url": self.link_url, "label": self.question})
+            out.append({"kind": "link", "url": self.link_url, "label": link_label(self.link_url)})
         return out
+
+
+# リンクのボタンの名前。行き先から決める。画面側で言語ごとの文言に置き換える
+LINK_LABELS = (("line.me", "line"), ("maps.app.goo.gl", "map"), ("google.com/maps", "map"),
+               ("youtu", "video"), ("マンガ", "manga"))
+
+
+def link_label(url: str) -> str:
+    for needle, label in LINK_LABELS:
+        if needle in url:
+            return label
+    return "link"
 
 
 def from_supabase_row(row: dict[str, Any]) -> KnowledgeItem:

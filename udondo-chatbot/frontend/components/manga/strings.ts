@@ -26,7 +26,7 @@ type Strings = {
   textSize: string
   language: string
   quickTitle: string
-  demo: string
+  links: Record<string, string>
   limitReached: string
   errors: Record<string, string>
 }
@@ -47,7 +47,7 @@ const ja: Strings = {
   textSize: "文字の大きさを変える",
   language: "言語を変える",
   quickTitle: "よくある質問",
-  demo: "見本の画面です。本番の運用には使いません。",
+  links: { line: "公式 LINE を開く", map: "地図を開く", video: "動画を見る", manga: "漫画を読む", link: "リンクを開く" },
   limitReached: "この会話の質問の回数が上限に達しました。公式 LINE のヘルプをご利用ください。",
   errors: {
     rate_limited: "少し時間をおいてから、もう一度送ってください。",
@@ -71,7 +71,7 @@ const en: Strings = {
   textSize: "Change text size",
   language: "Change language",
   quickTitle: "Common questions",
-  demo: "This is a demo screen, not for production use.",
+  links: { line: "Open official LINE", map: "Open map", video: "Watch video", manga: "Read the manga", link: "Open link" },
   limitReached: "You have reached the question limit for this chat. Please use the official LINE help.",
   errors: {
     rate_limited: "Please wait a moment and try again.",
@@ -94,6 +94,7 @@ const zhHans: Strings = {
   retry: "重新连接",
   close: "关闭",
   quickTitle: "常见问题",
+  links: { line: "打开官方 LINE", map: "打开地图", video: "观看视频", manga: "阅读漫画", link: "打开链接" },
 }
 
 const zhHant: Strings = {
@@ -111,6 +112,7 @@ const zhHant: Strings = {
   retry: "重新連線",
   close: "關閉",
   quickTitle: "常見問題",
+  links: { line: "開啟官方 LINE", map: "開啟地圖", video: "觀看影片", manga: "閱讀漫畫", link: "開啟連結" },
 }
 
 const ko: Strings = {
@@ -128,6 +130,7 @@ const ko: Strings = {
   retry: "다시 연결",
   close: "닫기",
   quickTitle: "자주 묻는 질문",
+  links: { line: "공식 LINE 열기", map: "지도 열기", video: "동영상 보기", manga: "만화 읽기", link: "링크 열기" },
 }
 
 export const STRINGS: Record<Lang, Strings> = { ja, en, "zh-Hans": zhHans, "zh-Hant": zhHant, ko }
