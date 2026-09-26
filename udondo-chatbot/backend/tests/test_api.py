@@ -130,3 +130,11 @@ def test_history_of_other_language_is_dropped(client):
     ask(client, s["session_id"], "How long do I boil noodles?")
     # 2問目は日本語の履歴1往復を含み、3問目は英語なので履歴を含まない
     assert seen == [1, 3, 1]
+
+
+def test_mentioned_link_is_added_on_done(client):
+    s = start(client)
+    # 偽の LLM は知識外の文で公式 LINE に触れるが、参照の番号を付けない
+    events = parse_sse(ask(client, s["session_id"], "今日の天気は？").text)
+    done = events[-1][1]
+    assert done["attachments"][0]["label"] == "line"

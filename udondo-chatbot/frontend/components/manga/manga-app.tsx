@@ -129,7 +129,13 @@ export function MangaApp() {
         } else if (ev.name === "safety") {
           patchBot(botId, (m) => ({ ...m, safety: ev.data, text: "" }))
         } else if (ev.name === "done") {
-          patchBot(botId, (m) => ({ ...m, pending: false, turnId: ev.data.turn_id }))
+          const extra = ev.data.attachments ?? []
+          patchBot(botId, (m) => ({
+            ...m,
+            pending: false,
+            turnId: ev.data.turn_id,
+            attachments: [...m.attachments, ...extra.filter((a) => !m.attachments.some((x) => x.url === a.url))],
+          }))
           setRemaining(ev.data.remaining_turns)
         } else if (ev.name === "degraded") {
           setMessages((ms) => ms.filter((m) => m.id !== botId))

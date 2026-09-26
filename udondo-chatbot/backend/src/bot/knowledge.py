@@ -22,6 +22,7 @@ class KnowledgeItem:
     video_url: str | None = None
     link_url: str | None = None
     priority: str | None = None
+    mention_keywords: list[str] = field(default_factory=list)
 
     def attachments(self) -> list[dict[str, str]]:
         out = []

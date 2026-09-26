@@ -28,3 +28,5 @@ link_knowledge:
     question: 公式LINEのURLは？友だち追加の方法は？
     answer: 公式LINEは、この答えの下のボタンから開ける。LINEで「ウドンド」と検索して友だち追加することもできる。
     link_url: https://line.me/R/ti/p/@771ypyse
+    # 回答の本文にこの語が出たら、参照の番号がなくてもボタンを付ける
+    mention_keywords: [LINE, ライン]

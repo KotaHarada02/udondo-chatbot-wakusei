@@ -195,7 +195,21 @@ class DialogueService:
                                              "session_id": session["id"], "turn_id": turn_id,
                                              "question_masked": text, "language": lang, "reason": "out_of_knowledge",
                                              "created_at": now()})
-        yield Event("done", {"turn_id": turn_id, "remaining_turns": remaining, "usage": {"cost_usd": round(cost, 6)}})
+        done = {"turn_id": turn_id, "remaining_turns": remaining, "usage": {"cost_usd": round(cost, 6)}}
+        extra = self._mentioned_links(kb, bot_text, row["refs"]) if not safety_id else []
+        if extra:
+            done["attachments"] = extra
+        yield Event("done", done)
+
+    @staticmethod
+    def _mentioned_links(kb, text: str, ref_ids: list[str]) -> list[dict[str, str]]:
+        """本文が店のリンクに触れているのに参照がないとき、そのリンクのボタンを足す。"""
+        sent = {a["url"] for kid in ref_ids if kid in kb.by_id for a in kb.by_id[kid].attachments()}
+        out = []
+        for k in kb.items:
+            if k.mention_keywords and any(w.lower() in text.lower() for w in k.mention_keywords):
+                out += [a for a in k.attachments() if a["url"] not in sent]
+        return list({a["url"]: a for a in out}.values())
 
     async def _generate(self, system: str, contents: list[dict[str, Any]], usage: Usage) -> AsyncIterator[str]:
         """時間切れか失敗のとき、何も送っていなければ1回だけ再試行する。"""
@@ -222,7 +236,8 @@ class DialogueService:
     def _meta_event(self, turn_id: str, lang: str, splitter: MetaSplitter, kb) -> Event:
         m = splitter.meta
         items = kb.resolve(m.refs) if m else []
-        attachments = [a for k in items for a in k.attachments()]
+        # 同じ行き先のボタンは1つにまとめる
+        attachments = list({a["url"]: a for k in items for a in k.attachments()}.values())
         return Event("meta", {"turn_id": turn_id, "language": lang, "emotion": m.emotion if m else "neutral",
                               "refs": m.refs if m else [], "out_of_knowledge": bool(m and m.out_of_knowledge),
                               "attachments": attachments})

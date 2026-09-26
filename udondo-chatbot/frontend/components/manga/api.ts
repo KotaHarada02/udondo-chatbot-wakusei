@@ -40,7 +40,7 @@ export type ChatEvent =
   | { name: "meta"; data: { turn_id: string; emotion: Emotion; refs: string[]; out_of_knowledge: boolean; attachments: Attachment[] } }
   | { name: "delta"; data: { text: string } }
   | { name: "safety"; data: { template_id: string; title: string; text: string; note: string } }
-  | { name: "done"; data: { turn_id: string; remaining_turns: number } }
+  | { name: "done"; data: { turn_id: string; remaining_turns: number; attachments?: Attachment[] } }
   | { name: "degraded"; data: { reason: string } }
 
 export class ApiError extends Error {
