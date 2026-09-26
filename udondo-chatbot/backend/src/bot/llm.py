@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 from dataclasses import dataclass
 from typing import Any, AsyncIterator, Protocol
 
@@ -72,7 +73,9 @@ class FakeLLM:
         self._delay = delay
 
     async def stream(self, system: str, contents: list[dict[str, Any]], usage: Usage) -> AsyncIterator[str]:
-        question = contents[-1]["parts"][0]["text"]
+        raw = contents[-1]["parts"][0]["text"]
+        m = re.search(r"<customer_message[^>]*>\n(.*)\n</customer_message>", raw, re.S)
+        question = m.group(1) if m else raw
         kb: KnowledgeBase = self._kb_getter()
         best, score = None, 0
         for short, kid in kb.short_ids.items():

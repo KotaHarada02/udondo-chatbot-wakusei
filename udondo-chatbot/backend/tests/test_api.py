@@ -108,3 +108,25 @@ def test_feedback(client):
     h = {"X-Session-Id": s["session_id"]}
     assert client.post("/api/v1/t/udondo/feedback", json={"turn_id": done["turn_id"], "resolved": False}, headers=h).status_code == 204
     assert client.post("/api/v1/t/udondo/feedback", json={"turn_id": "x", "resolved": True}, headers=h).status_code == 404
+
+
+
+def test_history_of_other_language_is_dropped(client):
+    from src.bot.api import service_for
+
+    svc = service_for("udondo")
+    seen = []
+    orig = svc.llm.stream
+
+    async def spy(system, contents, usage):
+        seen.append(len(contents))
+        async for x in orig(system, contents, usage):
+            yield x
+
+    svc.llm.stream = spy
+    s = start(client)
+    ask(client, s["session_id"], "麺の茹で方と茹で時間")
+    ask(client, s["session_id"], "麺は何分？")
+    ask(client, s["session_id"], "How long do I boil noodles?")
+    # 2問目は日本語の履歴1往復を含み、3問目は英語なので履歴を含まない
+    assert seen == [1, 3, 1]

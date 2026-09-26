@@ -13,7 +13,7 @@ from .config import Tenant
 from .knowledge import KnowledgeCache
 from .llm import LLMProvider, Usage
 from .meta import MetaSplitter
-from .prompt import build_contents, build_system_prompt, looks_leaked
+from .prompt import answer_language, build_contents, build_system_prompt, looks_leaked
 from .safety import SafetyRouter, clean_input, mask_pii
 from .store import Store
 
@@ -108,7 +108,8 @@ class DialogueService:
 
     async def chat(self, session: dict[str, Any], message: str, language: str | None) -> AsyncIterator[Event]:
         limits = self.tenant.limits
-        lang = language if language in self.tenant.languages else session["language"]
+        ui_lang = language if language in self.tenant.languages else session["language"]
+        lang = answer_language(message, ui_lang)
         seq = session["turn_count"] + 1
         remaining = limits["session_turns"] - seq
         turn_id = f"{session['id']}-{seq}"
@@ -133,9 +134,11 @@ class DialogueService:
 
         kb = self.knowledge.get()
         system = build_system_prompt(self.tenant, kb)
+        # 言語が変わったときは、違う言語の履歴を渡さない。履歴の言語に答えが引きずられるため
         history = [(t["user_text_masked"], t["bot_text"])
-                   for t in await self.store.recent_turns(session["id"], self.tenant.config["llm"]["history_turns"])]
-        contents = build_contents(history, lang, text)
+                   for t in await self.store.recent_turns(session["id"], self.tenant.config["llm"]["history_turns"])
+                   if answer_language(t["user_text_masked"], ui_lang) == lang]
+        contents = build_contents(history, ui_lang, text)
 
         splitter = MetaSplitter()
         body: list[str] = []

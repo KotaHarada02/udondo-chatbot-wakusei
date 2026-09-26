@@ -13,7 +13,9 @@ def test_parse_unknown_values_fall_back():
 
 def test_parse_broken():
     assert parse_meta_line("こんにちは").broken
-    assert parse_meta_line("#meta {oops").broken
+    # #meta で始まる行は読めなくても本文に回さない
+    m = parse_meta_line("#meta {oops")
+    assert not m.broken and m.emotion == "neutral"
 
 
 def test_splitter_holds_until_newline():
@@ -34,3 +36,19 @@ def test_splitter_finish_without_newline():
     s = MetaSplitter()
     assert s.feed("改行のない答え") == ""
     assert s.finish() == "改行のない答え"
+
+
+def test_parse_repairs_double_colon():
+    m = parse_meta_line('#meta {"e":"neutral","r":["K16"],"o":false,"s"::""}')
+    assert (m.refs, m.out_of_knowledge, m.broken) == (["K16"], False, False)
+
+
+def test_parse_extracts_fields_from_mangled_json():
+    m = parse_meta_line('#meta {e:"sorry", "r": ["K1" "K2"], "o": true, "s": "burn"')
+    assert m.out_of_knowledge is True and m.safety == "burn" and not m.broken
+
+
+def test_unreadable_meta_line_is_never_shown():
+    s = MetaSplitter()
+    assert s.feed("#meta {{{\n本文") == "本文"
+    assert not s.meta.broken

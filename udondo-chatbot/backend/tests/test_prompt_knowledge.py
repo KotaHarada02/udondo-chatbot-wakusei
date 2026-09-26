@@ -31,10 +31,21 @@ def test_system_prompt_has_persona_rules_and_knowledge():
 
 def test_contents_wraps_customer_text_and_trims_history():
     c = build_contents([("前の質問", "あ" * 500)], "ja", "今の質問")
-    assert c[-1]["parts"][0]["text"] == '<customer_message lang="ja">\n今の質問\n</customer_message>'
+    assert c[-1]["parts"][0]["text"] == '回答の言語: 日本語 ja。本文はすべて日本語で書く。\n<customer_message lang="ja">\n今の質問\n</customer_message>'
     assert len(c[1]["parts"][0]["text"]) == 200
 
 
 def test_leak_detection():
     assert looks_leaked("# 答え方の規則 1. ...")
     assert not looks_leaked("標準は10分だ。")
+
+
+def test_answer_language():
+    from src.bot.prompt import answer_language
+
+    assert answer_language("How long?", "ja") == "en"
+    assert answer_language("麺は何分？", "en") == "ja"
+    assert answer_language("면은 몇 분?", "ja") == "ko"
+    assert answer_language("面要煮几分钟", "zh-Hans") == "zh-Hans"
+    assert answer_language("麵要煮幾分鐘", "zh-Hant") == "zh-Hant"
+    assert answer_language("123", "ko") == "ko"

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 
 EMOTIONS = {"neutral", "smile", "think", "surprise", "sorry", "serious"}
@@ -18,16 +19,36 @@ class Meta:
     broken: bool = False
 
 
+def _loads_lenient(raw: str) -> dict | None:
+    """LLM が少し崩した JSON も読む。読めなければ項目ごとに拾う。"""
+    for candidate in (raw, re.sub(r":\s*:", ":", raw).replace("'", '"')):
+        try:
+            d = json.loads(candidate)
+            if isinstance(d, dict):
+                return d
+        except json.JSONDecodeError:
+            pass
+    d: dict = {}
+    if m := re.search(r'"e"\W*"(\w+)"', raw):
+        d["e"] = m.group(1)
+    if m := re.search(r'"r"\W*\[([^\]]*)\]', raw):
+        d["r"] = re.findall(r'"([^"]+)"', m.group(1))
+    if m := re.search(r'"o"\W*(true|false)', raw):
+        d["o"] = m.group(1) == "true"
+    if m := re.search(r'"s"\W*"(\w*)"', raw):
+        d["s"] = m.group(1)
+    return d or None
+
+
 def parse_meta_line(line: str) -> Meta:
+    """メタ行を読む。#meta で始まらない行だけを broken とし、本文として扱わせる。"""
     line = line.strip()
     if not line.startswith(PREFIX):
         return Meta(broken=True)
-    try:
-        d = json.loads(line[len(PREFIX):].strip())
-    except json.JSONDecodeError:
-        return Meta(broken=True)
-    if not isinstance(d, dict):
-        return Meta(broken=True)
+    d = _loads_lenient(line[len(PREFIX):].strip())
+    if d is None:
+        # #meta で始まる行は、読めなくても客には出さない
+        return Meta()
     emotion = d.get("e") if d.get("e") in EMOTIONS else "neutral"
     refs = [str(r) for r in d.get("r", []) if isinstance(r, (str, int))]
     safety = d.get("s") if d.get("s") in SAFETY_KINDS else ""
