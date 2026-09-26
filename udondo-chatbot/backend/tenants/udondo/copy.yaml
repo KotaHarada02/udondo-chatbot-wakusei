@@ -1,0 +1,42 @@
+# 画面の文言。中国語と韓国語は下訳であり、確認が要る。
+greeting_title:
+  ja: よく来たな、旅人
+  en: Welcome, traveler
+  zh-Hans: 欢迎你，旅人
+  zh-Hant: 歡迎你，旅人
+  ko: 어서 와, 여행자
+greeting:
+  ja: 俺はウドンド、この店の案内役だ。分からないことは何でも聞いてくれ。
+  en: I'm Udondo, the guide of this shop. Ask me anything you're unsure about.
+  zh-Hans: 我是乌冬多，这家店的向导。有不明白的尽管问我。
+  zh-Hant: 我是烏冬多，這家店的嚮導。有不明白的儘管問我。
+  ko: 나는 우돈도, 이 가게의 안내역이야. 모르는 건 뭐든 물어봐.
+quick_questions:
+  ja: ["初めてです。何をすればいい？", "支払い方法を教えて", "麺は何分茹でる？", "食べ終わったらどうする？"]
+  en: ["It's my first time. What should I do?", "How can I pay?", "How long do I boil the noodles?", "What do I do after eating?"]
+  zh-Hans: ["第一次来，该怎么做？", "怎么付款？", "面要煮几分钟？", "吃完后怎么办？"]
+  zh-Hant: ["第一次來，該怎麼做？", "怎麼付款？", "麵要煮幾分鐘？", "吃完後怎麼辦？"]
+  ko: ["처음이에요. 뭘 하면 되나요?", "결제 방법을 알려 주세요", "면은 몇 분 삶나요?", "다 먹으면 어떻게 하나요?"]
+sfx:
+  ja: 硬ッ!!
+fallback_intro:
+  ja: すまん、いまは質問に答えられないんだ。代わりに店の使い方をまとめておいたぞ。
+  en: Sorry, I can't answer right now. Here is how to use the shop instead.
+  zh-Hans: 抱歉，现在无法回答问题。我把店里的使用方法整理在下面。
+  zh-Hant: 抱歉，現在無法回答問題。我把店裡的使用方法整理在下面。
+  ko: 미안, 지금은 질문에 답할 수 없어. 대신 가게 이용 방법을 정리해 뒀어.
+fallback_steps:
+  ja:
+    - ["入店", "店内の QR から公式 LINE を友だち追加"]
+    - ["購入", "LINE で PayPay かカード。現金はオレンジ色のポストへ。おつりは出ない"]
+    - ["作る", "麺は左の茹で麺機で10分。スープは右で袋のまま4分"]
+    - ["食べる", "トッピングは自由。壁と青いファイルにレシピ"]
+    - ["片付け", "テーブルを拭き、食器は奥の下膳棚へ"]
+    - ["退店", "ビンと缶は持ち帰り。忘れ物を確かめる"]
+  en:
+    - ["Enter", "Add the official LINE account from the QR code in the shop"]
+    - ["Buy", "Pay with PayPay or a card on LINE. Cash goes in the orange box. No change is given"]
+    - ["Cook", "Boil noodles in the left boiler for 10 minutes. Warm the soup in its bag on the right for 4 minutes"]
+    - ["Eat", "Toppings are free. Recipes are on the wall and in the blue file"]
+    - ["Clean up", "Wipe the table and return dishes to the shelf at the back"]
+    - ["Leave", "Take bottles and cans with you. Check you have everything"]

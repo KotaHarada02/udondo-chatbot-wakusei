@@ -1,9 +1,5 @@
-import { PlanetGuideChat } from "@/components/planet-guide-chat"
+import { MangaApp } from "@/components/manga/manga-app"
 
 export default function Home() {
-  return (
-    <main className="min-h-dvh flex flex-col">
-      <PlanetGuideChat />
-    </main>
-  )
+  return <MangaApp />
 }

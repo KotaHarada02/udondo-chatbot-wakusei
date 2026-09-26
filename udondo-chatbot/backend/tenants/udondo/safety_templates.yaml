@@ -1,0 +1,54 @@
+# 緊急時の質問に答える定型文。店の確認を経てから本番で使う。
+# 中国語と韓国語は下訳であり、確認が要る。
+templates:
+  burn:
+    keywords: [やけど, 火傷, 熱湯がかか, burn, burned, 烫伤, 燙傷, 화상]
+    title: {ja: やけどをしたとき, en: If you get burned, zh-Hans: 烫伤时, zh-Hant: 燙傷時, ko: 화상을 입었을 때}
+    text:
+      ja: やけどしたら、すぐに水道の水で冷やしてくれ。痛みがひどいときや範囲が広いときは、迷わず119番に電話してくれ。
+      en: If you get burned, cool it under running tap water right away. If it is severe or covers a large area, call 119 for an ambulance.
+      zh-Hans: 烫伤后请立刻用自来水冲凉。疼痛严重或面积较大时，请马上拨打119。
+      zh-Hant: 燙傷後請立刻用自來水沖涼。疼痛嚴重或面積較大時，請馬上撥打119。
+      ko: 화상을 입었다면 바로 수돗물로 식혀 주세요. 통증이 심하거나 범위가 넓으면 망설이지 말고 119에 전화하세요.
+  injury:
+    keywords: [けがをした, 怪我, 切った, 血が出, injury, injured, bleeding, 受伤, 受傷, 다쳤]
+    title: {ja: けがをしたとき, en: If you are injured, zh-Hans: 受伤时, zh-Hant: 受傷時, ko: 다쳤을 때}
+    text:
+      ja: けがをしたら、まず傷を清潔な布で押さえてくれ。血が止まらないときやひどいときは、119番に電話してくれ。
+      en: If you are injured, press a clean cloth on the wound. If the bleeding does not stop or it is serious, call 119.
+      zh-Hans: 受伤时请先用干净的布按住伤口。血止不住或伤势严重时，请拨打119。
+      zh-Hant: 受傷時請先用乾淨的布按住傷口。血止不住或傷勢嚴重時，請撥打119。
+      ko: 다쳤다면 먼저 깨끗한 천으로 상처를 눌러 주세요. 피가 멈추지 않거나 심하면 119에 전화하세요.
+  fire:
+    keywords: [火事, 火が出, 煙が, 燃えて, fire, smoke, 火灾, 着火, 火災, 불이 났]
+    title: {ja: 火や煙が出たとき, en: If you see fire or smoke, zh-Hans: 起火或冒烟时, zh-Hant: 起火或冒煙時, ko: 불이나 연기가 났을 때}
+    text:
+      ja: 火や煙が出たら、すぐに店の外へ出て119番に電話してくれ。消そうとして無理をしないでくれ。
+      en: If you see fire or smoke, leave the shop immediately and call 119. Do not try to put it out if it is risky.
+      zh-Hans: 起火或冒烟时，请立刻离开店铺并拨打119。不要勉强灭火。
+      zh-Hant: 起火或冒煙時，請立刻離開店鋪並撥打119。不要勉強滅火。
+      ko: 불이나 연기가 나면 바로 가게 밖으로 나가 119에 전화하세요. 무리해서 끄려고 하지 마세요.
+  sick:
+    keywords: [気分が悪, 倒れ, 救急車, ambulance, collapsed, feel sick, 不舒服, 晕倒, 暈倒, 아파요, 쓰러]
+    title: {ja: 具合の悪い人がいるとき, en: If someone feels sick, zh-Hans: 有人身体不适时, zh-Hant: 有人身體不適時, ko: 몸이 안 좋은 사람이 있을 때}
+    text:
+      ja: 気分が悪くなった人がいたら、無理に動かさず119番に電話してくれ。
+      en: If someone feels sick or collapses, do not move them by force and call 119.
+      zh-Hans: 如果有人身体不适或晕倒，请不要勉强移动，并拨打119。
+      zh-Hant: 如果有人身體不適或暈倒，請不要勉強移動，並撥打119。
+      ko: 몸이 안 좋아진 사람이 있으면 무리하게 움직이지 말고 119에 전화하세요.
+  suspicious:
+    keywords: [不審, 怖い人, つきまと, suspicious, stalking, 可疑, 跟踪, 跟蹤, 수상한]
+    title: {ja: 不審な人がいるとき, en: If there is a suspicious person, zh-Hans: 有可疑人员时, zh-Hant: 有可疑人員時, ko: 수상한 사람이 있을 때}
+    text:
+      ja: 自分の身の安全を先に守って、その場から離れてくれ。急ぐときは柱の赤いボタンを押してくれ。警備会社につながる。事件のおそれがあれば110番だ。
+      en: Put your safety first and move away. In an emergency, press the red button on the pillar to reach the security company. If it may be a crime, call 110.
+      zh-Hans: 请先确保自身安全并离开现场。紧急时请按柱子上的红色按钮，会接通保安公司。可能涉及案件时请拨打110。
+      zh-Hant: 請先確保自身安全並離開現場。緊急時請按柱子上的紅色按鈕，會接通保全公司。可能涉及案件時請撥打110。
+      ko: 먼저 자신의 안전을 지키고 그 자리를 떠나세요. 급할 때는 기둥의 빨간 버튼을 누르면 경비 회사로 연결됩니다. 사건일 우려가 있으면 110에 전화하세요.
+note:
+  ja: この案内は店が確認した定型文です
+  en: This is a standard message checked by the shop
+  zh-Hans: 此说明为店铺确认过的固定内容
+  zh-Hant: 此說明為店鋪確認過的固定內容
+  ko: 이 안내는 가게가 확인한 정해진 문구입니다

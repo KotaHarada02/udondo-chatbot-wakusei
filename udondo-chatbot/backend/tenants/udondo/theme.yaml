@@ -1,0 +1,24 @@
+# 案B 漫画のコマ
+tokens:
+  paper: "#ffffff"
+  ink: "#111111"
+  spot: "#ffd23f"
+  soft: "#4a4a4a"
+  tone: "#c9c9c9"
+  alert: "#c8231b"
+  alert_bg: "#fff0ee"
+  border_width: 3px
+  radius_bubble: 26px
+  radius_control: 0px
+  font_display: Dela Gothic One
+  font_body: Zen Kaku Gothic New
+variants:
+  header: band
+  character: panel
+  bot_message: manga
+  user_message: narration
+  quick_questions: grid
+  fallback_steps: panels
+decorations:
+  speedlines: true
+  screentone: true
